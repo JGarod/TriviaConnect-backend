@@ -28,8 +28,12 @@ const esquemaRegistro = Joi.object({
 const esquemaTokenRegistro = Joi.object({
     token: Joi.string().max(255).required(),
 });
+const esquemaRegistroCorreo = Joi.object({
+    email: Joi.string().max(255).required(),
+});
 
 module.exports = {
     esquemaRegistro,
-    esquemaTokenRegistro
+    esquemaTokenRegistro,
+    esquemaRegistroCorreo
 }

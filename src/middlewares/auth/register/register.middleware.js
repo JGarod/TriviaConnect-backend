@@ -1,4 +1,4 @@
-const { esquemaRegistro, esquemaTokenRegistro } = require("../../../validadores/auth/register/register");
+const { esquemaRegistro, esquemaTokenRegistro, esquemaRegistroCorreo } = require("../../../validadores/auth/register/register");
 
 const validarRegistro = (req, res, next) => {
     const { error } = esquemaRegistro.validate(req.body, { abortEarly: false });
@@ -34,7 +34,22 @@ const validarTokenRegisto = (req, res, next) => {
 };
 
 
+const validarcorreoRegistro = (req, res, next) => {
+    const { error } = esquemaRegistroCorreo.validate(req.body, { abortEarly: false });
+
+    if (error) {
+        const mensajesErrores = error.details.map(detalle => detalle.message);
+        return res.status(400).json({
+            message: "Errores de validación",
+            detalles: mensajesErrores
+        });
+    }
+    next();
+};
+
+
 module.exports = {
     validarRegistro,
-    validarTokenRegisto
+    validarTokenRegisto,
+    validarcorreoRegistro
 }
