@@ -51,8 +51,7 @@ const registerUser = async (req, res, next) => {
 
         await enviarEmailVerificacion(email, enlace, `${process.env.APP_NAME} Haz clic para verificar tu cuenta`, html);
 
-        res.json({ message: "Registro exitoso. Revisa tu email para verificar la cuenta." });
-
+      return res.status(200).json({ message: "Registro exitoso. Revisa tu email para verificar la cuenta." });
     } catch (error) {
         next(error);
     }

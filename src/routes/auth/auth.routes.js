@@ -1,10 +1,10 @@
 const { Router } = require("express");
-const { login } = require("../../controllers/auth/auth.controller");
 const { validateLogin } = require("../../middlewares/auth/auth.middleware");
 const { validarRegistro, validarTokenRegisto, validarcorreoRegistro } = require("../../middlewares/auth/register/register.middleware");
 const { registerUser } = require("../../controllers/auth/register/register.controller");
 const { validateTokenRegister, reenviarCorreo, newTokenReenviar } = require("../../controllers/auth/token-validador/register-token.controller");
 const { crearLimiter } = require("../../utils/limiteEnvios");
+const { loginUser } = require("../../controllers/auth/login/login.controller");
 
 const router = Router();
 const limiter5Min = crearLimiter({
@@ -14,7 +14,7 @@ const limiter5Min = crearLimiter({
 });
 
 // POST /api/auth/login
-// router.post("/login", [validateLogin], login);
+router.post("/login", [validateLogin], loginUser);
 
 
 // POST /api/auth/register
