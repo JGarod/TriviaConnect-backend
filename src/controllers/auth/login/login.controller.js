@@ -34,7 +34,7 @@ const loginUser = async (req, res, next) => {
             username: existe.nombre_usuario
           },
           process.env.JWT_SECRET,
-          { expiresIn: '5s' }
+          { expiresIn: process.env.JWT_MINUTES, }
         );
         return res.status(200).json({token});
 

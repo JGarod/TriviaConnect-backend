@@ -6,7 +6,8 @@ const routes = require("./src/routes/index.routes");
 const { errorHandler } = require('./src/utils/errorHandler');
 const app = express();
 const cors = require('cors');
-app.use(cors({ origin: 'http://localhost:4200' }));
+app.use(cors({ origin: '*' }));
+// app.use(cors({ origin: 'http://localhost:4200' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
