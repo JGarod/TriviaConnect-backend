@@ -18,7 +18,7 @@ const Joi = require("joi");
 // });
 
 const esquemaRegistro = Joi.object({
-    nombre_usuario: Joi.string().max(30).required(),
+    nombre_usuario: Joi.string().max(50).required(),
     email: Joi.string().email().max(100).required(),
     passwordUno: Joi.string().max(50).required(),
     passwordDos: Joi.string().max(50).required()

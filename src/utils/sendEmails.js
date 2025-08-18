@@ -12,8 +12,17 @@ const transporter = nodemailer.createTransport({
     },
 });
 
+// Función específica para email de verificación
+async function enviarEmailVerificacion(email, enlace, titulo, html) {
+    const subject = titulo;
+    const text = `Haz clic para verificar tu cuenta: ${enlace}`;
 
-// Función genérica para enviar email
+    await enviarEmail({ to: email, subject, text, html });
+}
+
+// Puedes agregar más funciones para otros tipos de correo, ej:
+// enviarEmailRecuperacionPassword, enviarEmailNotificacion, etc.
+// Función genera para enviar email
 async function enviarEmail({ to, subject, text, html }) {
     try {
         const info = await transporter.sendMail({
@@ -25,7 +34,7 @@ async function enviarEmail({ to, subject, text, html }) {
             attachments: [
                 {
                     filename: 'logo.png',
-                    path: path.join(__dirname, '../../public/LSPD.png'),
+                    path: path.join(__dirname, '../../public/logo.png'),
                     cid: 'logo_correo' // Debe coincidir con el cid en el HTML
                 }
             ]
@@ -37,20 +46,6 @@ async function enviarEmail({ to, subject, text, html }) {
         throw error;
     }
 }
-
-// Función específica para email de verificación
-async function enviarEmailVerificacion(email, enlace,titulo,html) {
-    const subject = titulo;
-    // const html = `<p>Haz clic para verificar tu cuenta: <a href="${enlace}">${enlace}</a></p>`;
-    const text = `Haz clic para verificar tu cuenta: ${enlace}`;
-
-    await enviarEmail({ to: email, subject, text, html });
-}
-
-// Puedes agregar más funciones para otros tipos de correo, ej:
-// enviarEmailRecuperacionPassword, enviarEmailNotificacion, etc.
-
 module.exports = {
-    enviarEmail,
     enviarEmailVerificacion,
 };

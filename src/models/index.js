@@ -5,6 +5,8 @@ const db = { sequelize, Sequelize };
 
 // importar modelos
 db.Usuario = require('./Usuarios')(sequelize, Sequelize.DataTypes);
+db.Preferencias = require('./UsuarioPreferencias')(sequelize, Sequelize.DataTypes);
+
 db.Amistad = require('./Amistad')(sequelize, Sequelize.DataTypes);
 db.Sala = require('./Sala')(sequelize, Sequelize.DataTypes);
 db.UsuarioSala = require('./UsuarioSala')(sequelize, Sequelize.DataTypes);

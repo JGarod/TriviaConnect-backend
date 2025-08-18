@@ -1,4 +1,5 @@
 // authMiddleware.js
+require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const { throwCustomError } = require('../../../utils/throwCustomError');
 
@@ -16,8 +17,25 @@ const verifyToken = (req, res, next) => {
     } catch (err) {
         throwCustomError('Token inválido o expirado', 401);
         // return res.status(403).json({ message: 'Token inválido o expirado' });
-        
+
     }
 };
 
-module.exports = verifyToken;
+const crearToken = async (userData) => {
+    try {
+        const token = jwt.sign(
+            {
+                id: userData.id_usuario,
+                username: userData.nombre_usuario,
+                slug: userData.slug,
+                uuid_imagen: userData.uuid_imagen,
+            },
+            process.env.JWT_SECRET,
+            { expiresIn: process.env.JWT_MINUTES }
+        );
+        return token
+    } catch (error) {
+        throwCustomError('No se puede firmar token', 401);
+    }
+};
+module.exports = { verifyToken, crearToken };
