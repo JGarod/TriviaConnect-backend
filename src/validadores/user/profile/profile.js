@@ -16,8 +16,15 @@ const esquemaPasswords = Joi.object({
     passwordDos: Joi.string().max(50).required()
 });
 
+const esquemaPreferences = Joi.object({
+    acepta_solicitud_amistad: Joi.boolean().required(),
+    color_primario: Joi.string().max(7).required(),
+    color_secundario: Joi.string().max(7).required()
+});
+
 module.exports = {
     esquemaSlug,
     esquemaProfileBasic,
-    esquemaPasswords
+    esquemaPasswords,
+    esquemaPreferences
 }

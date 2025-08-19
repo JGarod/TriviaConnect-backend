@@ -1,8 +1,8 @@
 const { Router } = require("express");
 
 const { verifyToken } = require("../../middlewares/auth/jwt/jwt.middleware");
-const { validarSlug, validarDatosBasicos, findUserByUsername, validarPasswords, comparePasswords } = require("../../middlewares/user/profile/profile.middleware");
-const { findUserBySlug, findUserByIDEdit, updateDataBasica, updatePasswordUser } = require("../../controllers/user/profile/profile.controller");
+const { validarSlug, validarDatosBasicos, findUserByUsername, validarPasswords, comparePasswords, validarPreferencesUser } = require("../../middlewares/user/profile/profile.middleware");
+const { findUserBySlug, findUserByIDEdit, updateDataBasica, updatePasswordUser, updatePreferencesUser } = require("../../controllers/user/profile/profile.controller");
 const upload = require("../../middlewares/cloudinary/cloudinary.middleware");
 const { uploadUserCloudinary } = require("../../controllers/cloudinary/uploadCloudinay.controller");
 
@@ -22,6 +22,7 @@ router.post('/edit/upload-profile', [verifyToken,upload.single('avatar')], uploa
 router.post('/edit/datos-basicos', [verifyToken, validarDatosBasicos, findUserByUsername], updateDataBasica);
 //actualizar contraseña Usuario
 router.post('/edit/password-user', [verifyToken, validarPasswords, comparePasswords], updatePasswordUser);
-
+//actualizar preferencias Usuario
+router.post('/edit/preferences-user', [verifyToken, validarPreferencesUser], updatePreferencesUser);
 
 module.exports = router;

@@ -138,9 +138,31 @@ const updatePasswordUser = async (req, res, next) => {
 };
 
 
+//ACTUALIZAR PREFERENCIAS USUARIO
+const updatePreferencesUser = async (req, res, next) => {
+    try {
+        let { id } = req.user;
+        let { acepta_solicitud_amistad, color_primario, color_secundario } = req.body;
+
+        await Preferencias.update(
+            {
+                acepta_solicitud_amistad,
+                color_primario,
+                color_secundario
+            },
+            { where: { id_usuario: id } }
+        )
+        return res.json({ message: "Preferencias actualizadas correctamente" });
+
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     findUserBySlug,
     findUserByIDEdit,
     updateDataBasica,
-    updatePasswordUser
+    updatePasswordUser,
+    updatePreferencesUser
 }

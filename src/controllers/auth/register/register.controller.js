@@ -10,6 +10,7 @@ const { emailRegistro } = require("../../../utils/mailsPlantilla.js");
 const { slugify, validarSlugUser } = require('../../../helper/slugConverter.js');
 const { v4: uuidv4 } = require('uuid');
 const { generarCodigoAmigo } = require('../../../helper/codeFriendConverter.js');
+
 //funcion para registar un usuario
 const registerUser = async (req, res, next) => {
   const transaction = await sequelize.transaction(); // Inicia la transacción

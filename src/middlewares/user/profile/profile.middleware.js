@@ -1,10 +1,11 @@
 const { Op } = require("sequelize");
 const { normalizarEmail } = require("../../../controllers/auth/register/register.controller");
 const { Usuario } = require("../../../models");
-const { esquemaSlug, esquemaProfileBasic, esquemaPasswords } = require("../../../validadores/user/profile/profile");
+const { esquemaSlug, esquemaProfileBasic, esquemaPasswords, esquemaPreferences } = require("../../../validadores/user/profile/profile");
 const { throwCustomError } = require("../../../utils/throwCustomError");
 const { slugify, validarSlugUser } = require("../../../helper/slugConverter");
 const bcrypt = require("bcrypt");
+const { limpiarYValidarHex } = require("../../../helper/hexadecimalValidador");
 
 //valida que llegue slug
 const validarSlug = (req, res, next) => {
@@ -132,10 +133,33 @@ const comparePasswords = async (req, res, next) => {
     }
 };
 
+
+//valida que llegue objeto de preferencias
+const validarPreferencesUser = (req, res, next) => {
+    const { error } = esquemaPreferences.validate(req.body, { abortEarly: false });
+
+    if (error) {
+        const mensajesErrores = error.details.map(detalle => detalle.message);
+        return res.status(400).json({
+            message: "Errores de validación",
+            detalles: mensajesErrores
+        });
+    } else {
+        let { color_secundario, color_primario } = req.body;
+        req.body.color_secundario = limpiarYValidarHex(color_secundario);
+        req.body.color_primario = limpiarYValidarHex(color_primario);
+
+        next();
+    }
+
+
+};
+
 module.exports = {
     validarSlug,
     validarDatosBasicos,
     findUserByUsername,
     validarPasswords,
-    comparePasswords
+    comparePasswords,
+    validarPreferencesUser
 }
