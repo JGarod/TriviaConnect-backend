@@ -1,0 +1,25 @@
+DB_HOST=localhost
+DB_USER=trivia_user
+DB_PASS=triviapass
+DB_NAME=trivia_db
+DB_DIALECT=mysql
+PORT=3000
+DB_PORT=3307
+# .env (desarrollo)
+APP_URL=http://192.168.0.9:4200
+# APP_URL=http://localhost:4200
+# .env.production (producción)
+# APP_URL=https://tu-dominio-produccion.com
+
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=triviaaccomz@gmail.com
+SMTP_PASS=qqumihfrldtfoegk
+APP_NAME = 'TriviaApp'
+JWT_MINUTES = '4h'
+JWT_SECRET = 'QWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsIm$$#0495####'
+
+CLOUDINARY_CLOUD_NAME=dhwg9lvhl
+CLOUDINARY_API_KEY=549483956734774
+CLOUDINARY_API_SECRET=iZJls2HsjvntY_EdyXy9B41pNDM

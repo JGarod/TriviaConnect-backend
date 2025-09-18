@@ -3,11 +3,13 @@ const { throwCustomError } = require('../../../utils/throwCustomError');
 const jwt = require('jsonwebtoken');
 const bcrypt = require("bcrypt");
 const { crearToken } = require('../../../middlewares/auth/jwt/jwt.middleware');
+const { sonAmigos } = require('../../../middlewares/user/amistad/amistad.middleware');
 
 //fBuscar usuario por slug
 const findUserBySlug = async (req, res, next) => {
     try {
         let { slug } = req.params;
+        let { id } = req.user
         const existe = await Usuario.findOne({
             where: { slug },
             attributes: ['id_usuario', 'avatar', 'nombre_usuario', 'slug', 'uuid_imagen', 'codeFriend'],
@@ -22,6 +24,13 @@ const findUserBySlug = async (req, res, next) => {
             const mensaje = 'La cuenta que buscas no existe';
             throwCustomError(mensaje, 400);
         }
+        let busquedaAmistad = await sonAmigos(id, existe.id_usuario);
+        let estadoAmistad = null;
+        let id_solicitante = null;
+        if (busquedaAmistad.estado !== 'N/A') {
+            estadoAmistad = busquedaAmistad.estado;
+            id_solicitante = busquedaAmistad.id_solicitante;
+        }
 
         const profileData = {
             id_usuario: existe.id_usuario,
@@ -33,7 +42,9 @@ const findUserBySlug = async (req, res, next) => {
             // Preferencias
             acepta_solicitud_amistad: existe?.preferencias?.acepta_solicitud_amistad,
             color_primario: existe?.preferencias?.color_primario,
-            color_secundario: existe?.preferencias?.color_secundario
+            color_secundario: existe?.preferencias?.color_secundario,
+            estado_amistad: estadoAmistad,
+            id_solicitante: id_solicitante,
         };
 
         return res.status(200).json({ existe: profileData,message:'Usuario encontrado' });
